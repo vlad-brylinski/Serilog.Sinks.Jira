@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>Serilog Sink that sends log events to Jira</Description>
+    <PackageId>Serilog.Sinks.Jira</PackageId>
+    <PackageTags>jira;serilog;sink;logging</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>0.0.1</Version>
+    <RepositoryUrl>https://github.com/vlad-brylinski/Serilog.Sinks.Jira</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>serilog-sink-nuget.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.Http" Version="9.1.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="images\serilog-sink-nuget.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+</Project>
