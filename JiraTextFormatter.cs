@@ -4,7 +4,6 @@ using Serilog.Events;
 using Serilog.Formatting;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using Serilog.Debugging;
 using Serilog.Formatting.Json;
 
@@ -12,19 +11,12 @@ namespace Serilog.Sinks.Jira
 {
     public class JiraTextFormatter: ITextFormatter
     {
-        private readonly string _projectKey;
-        private readonly string _issueType;
         private readonly string _applicationId;
         private readonly string _hostName;
         private readonly string _envName;
 
-        public JiraTextFormatter(string projectKey, string issueType, string applicationId, string hostName, string envName)
+        public JiraTextFormatter(string applicationId, string hostName, string envName)
         {
-            if (string.IsNullOrEmpty(projectKey)) throw new ArgumentNullException(nameof(projectKey));
-            if (string.IsNullOrEmpty(issueType)) throw new ArgumentNullException(nameof(issueType));
-            
-            _projectKey = projectKey;
-            _issueType = issueType;
             _applicationId = applicationId;
             _hostName = hostName;
             _envName = envName;
@@ -32,33 +24,11 @@ namespace Serilog.Sinks.Jira
 
         public void Format(LogEvent logEvent, TextWriter output)
         {
-            if (string.IsNullOrEmpty(_projectKey)) throw new ArgumentNullException(nameof(_projectKey));
-            if (string.IsNullOrEmpty(_issueType)) throw new ArgumentNullException(nameof(_issueType));
-
             try
             {
                 var buffer = new StringWriter();
                 FormatContent(logEvent, buffer);
-
-                var jiraPayload = new
-                {
-                    fields = new
-                    {
-                        project = new { key = _projectKey },
-                        summary = logEvent.MessageTemplate.Text,
-                        description = buffer.ToString(),
-                        issuetype = new { name = _issueType }
-                    }
-                };
-
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
-                };
-
-                string json = JsonSerializer.Serialize(jiraPayload, options);
-                output.WriteLine(json);
+                output.WriteLine(buffer.ToString());
             }
             catch (Exception ex)
             {

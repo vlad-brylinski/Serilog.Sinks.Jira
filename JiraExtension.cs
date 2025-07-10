@@ -28,7 +28,8 @@ namespace Serilog
             return sinkConfiguration.Http(
                 requestUri: jiraApi,
                 queueLimitBytes: null,
-                textFormatter:  new JiraTextFormatter(projectKey, issueType, applicationId, hostName, envName),
+                batchFormatter: new JiraBatchFormatter(projectKey, issueType),
+                textFormatter:  new JiraTextFormatter( applicationId, hostName, envName),
                 httpClient: new JiraHttpClient(username, password));
         }
     } 
