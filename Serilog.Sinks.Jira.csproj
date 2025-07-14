@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog" Version="4.3.0" />
-    <PackageReference Include="Serilog.Sinks.Http" Version="9.1.1" />
     <PackageReference Include="System.Text.Json" Version="9.0.6" />
     <None Include="README.md" Pack="true" PackagePath="\"/>
     <None Include="images\serilog-sink-nuget.png" Pack="true" PackagePath="\"/>

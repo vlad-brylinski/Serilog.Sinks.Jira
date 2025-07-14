@@ -4,6 +4,7 @@ using Serilog.Events;
 using Serilog.Formatting;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Serilog.Debugging;
 using Serilog.Formatting.Json;
 
@@ -26,9 +27,7 @@ namespace Serilog.Sinks.Jira
         {
             try
             {
-                var buffer = new StringWriter();
-                FormatContent(logEvent, buffer);
-                output.WriteLine(buffer.ToString());
+                FormatContent(logEvent, output);
             }
             catch (Exception ex)
             {
